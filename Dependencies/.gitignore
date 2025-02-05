@@ -1,0 +1,3 @@
+# Ignore DLL files to prevent illegal redistribution of game assemblies:
+
+*.dll
