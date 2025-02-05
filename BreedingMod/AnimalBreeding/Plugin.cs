@@ -26,7 +26,7 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll(Assembly);
 
         PopulationCapPerIsland = Config.Bind("General", "Population cap per island",
-            50,
+            100,
             "If the animal population of an island exceeds this value, no more animals can get pregnant.");
         
         PregnancyDuration = Config.Bind("General", "Pregnancy duration (minutes)",
