@@ -1,9 +1,7 @@
 using System;
 using HarmonyLib;
-using Level_Manager;
 using NPC;
 using NPC.Abstract.Animals;
-using Terrain.Platforms;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -44,6 +42,10 @@ internal static class BreedingPatcher
             // Make sure the creature is fed
             if (__instance._controller.Data.Survival.IsHungry)
                 return;
+            // Now, check that the population cap isn't met yet
+            var population = CalculateIslandAnimalPopulation(__instance._controller);
+            if (population >= Plugin.PopulationCapPerIsland.Value)
+                return;
             // Finally, we can safely become pregnant
             __instance.Impregnate();
             Plugin.Logger.LogDebug($"NPC of ID '{__instance._controller.Data.Agent.SAgent.NpcId}' has become pregnant!");
@@ -69,6 +71,27 @@ internal static class BreedingPatcher
             {
                 Plugin.Logger.LogError("Exception thrown while giving birth: " + e);
             }
+        }
+
+        private static int CalculateIslandAnimalPopulation(NpcController npc)
+        {
+            var count = 0;
+            var soul = npc.Data.Transform.GlobalData.Soul;
+            if (soul == null)
+            {
+                Plugin.Logger.LogDebug("No soul data found!");
+                return 0;
+            }
+            var npcTrackers = soul.PlatformGlobalData.NpcTrackers;
+            
+            foreach (var element in npcTrackers)
+            {
+                if (element == null) continue;
+                var npcIdName = element.NpcData.NpcId.ToString();
+                if (npcIdName.StartsWith("Animal")) count++;
+            }
+
+            return count;
         }
     }
 }
