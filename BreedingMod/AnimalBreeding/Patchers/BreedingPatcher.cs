@@ -15,6 +15,13 @@ internal static class BreedingPatcher
     [HarmonyPatch(typeof(NpcReproduction))]
     public static class NpcReproductionPatches
     {
+        [HarmonyPatch(nameof(NpcReproduction.Initialize))]
+        [HarmonyPostfix]
+        public static void InitializePostfix(NpcReproduction __instance)
+        {
+            __instance._controller.Data.Agent.SAgent.SocialGestationDurationHours = Plugin.PregnancyDuration.Value / 60f;
+        }
+
         [HarmonyPatch(nameof(NpcReproduction.CheckImpregnate))]
         [HarmonyPostfix]
         public static void CheckImpregnatePostfix(NpcReproduction __instance)
