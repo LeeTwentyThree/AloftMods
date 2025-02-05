@@ -7,3 +7,4 @@ it should send the publicized assembly to a new folder.
 Required files:
 
 1. Aloft\Aloft_Data\Managed\Aloft.dll
+2. Aloft\Aloft_Data\Managed\Fusion.Runtime.dll

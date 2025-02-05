@@ -32,5 +32,8 @@
     <Reference Include="Aloft">
       <HintPath>..\..\Dependencies\Aloft.dll</HintPath>
     </Reference>
+    <Reference Include="Fusion.Runtime">
+      <HintPath>..\..\Dependencies\Fusion.Runtime.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
